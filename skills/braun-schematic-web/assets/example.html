@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><title>示例:梯度下降 · Braun Lo-fi</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Semi+Condensed:wght@400;500&family=IBM+Plex+Mono:wght@400&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false});fitMath()"></script>
+<link rel="stylesheet" href="tokens.css"><link rel="stylesheet" href="base.css">
+</head>
+<body><div class="page">
+  <h1>梯度下降</h1>
+  <p class="lede">沿着损失函数下降最快的方向,一步一步调整参数,直到损失不再明显变小。</p>
+
+  <section class="hero">
+    <div class="label">本周学习进度</div>
+    <div class="big">68<small>%</small></div>
+    <div class="meter" style="margin:20px 0 8px"><i style="width:68%"></i></div>
+    <div class="sub">已完成 17 / 25 个知识点 · 今天已花费 $138.20</div>
+  </section>
+
+  <div class="grid" style="margin-top:48px">
+    <section class="section" style="margin-top:0"><h2>核心公式</h2>
+      <div class="formula">$$\theta_{t+1} = \theta_t - \underline{\eta}\,\nabla_\theta L(\theta_t)$$<span class="no">(1)</span></div>
+      <p>其中 <span class="hl">η 是学习率</span>,太大会震荡,太小会很慢。</p>
+      <div class="code" style="margin-top:16px">for step in range(1000):
+    grad = loss_grad(theta)
+    theta = theta - lr * grad</div>
+    </section>
+    <section class="section" style="margin-top:0"><h2>知识点状态</h2>
+      <div class="table-wrap"><table><thead><tr><th>主题</th><th>状态</th><th>最近复习</th><th class="r">练习</th></tr></thead><tbody>
+        <tr><td>学习率</td><td><span class="tag ok">已掌握</span></td><td>11-12</td><td class="r">12</td></tr>
+        <tr><td>动量</td><td><span class="tag warn">需复习</span></td><td>11-08</td><td class="r">5</td></tr>
+        <tr><td>Adam</td><td><span class="tag bad">未学</span></td><td>—</td><td class="r">0</td></tr>
+      </tbody></table></div>
+    </section>
+  </div>
+
+  <section class="section"><h2>测验:学习率过大会怎样?</h2>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:14px">
+      <button class="tier" role="radio" aria-checked="false">收敛更快</button>
+      <button class="tier" role="radio" aria-checked="true">损失震荡甚至发散</button>
+      <button class="tier" role="radio" aria-checked="false">没有影响</button>
+    </div>
+    <div style="margin-top:24px;display:flex;gap:16px;flex-wrap:wrap"><button class="btn primary">提交答案</button><button class="btn">查看笔记</button></div>
+  </section>
+</div>
+<script src="fit-tables.js"></script><script src="fit-math.js"></script>
+<script>document.querySelectorAll('.tier').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('.tier').forEach(x=>x.setAttribute('aria-checked',x===t))}))</script>
+</body></html>

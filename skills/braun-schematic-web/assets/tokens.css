@@ -1,0 +1,22 @@
+/* Braun Lo-fi 设计令牌。只有浅色主题;点缀色只有一个(--accent),面积 <1%。 */
+:root {
+  --font-sans: "Barlow", "Noto Sans SC", "PingFang SC", "Microsoft YaHei UI", system-ui, sans-serif;
+  --font-cond: "Barlow Semi Condensed", "Barlow", "Noto Sans SC", sans-serif;   /* 大数字用窄体 */
+  --font-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+
+  --bg: #E8EBEE;        /* 冷白灰纸 */
+  --surface: #F3F5F7;   /* 仅浮层与输入 */
+  --ink: #14171A;       /* 冷黑 */
+  --ink-2: #434A52;
+  --ink-3: #5C636B;     /* 次要文字,在 --bg 上对比度约 5.1:1 */
+  --rule: #C3C9D0;      /* 细线 */
+  --line-strong: #97A0AA;
+  --tint: rgba(0, 0, 0, .05);
+
+  --panel: #DDE1E5;      /* 运算框底色 */
+  --accent: #D97757;         /* Claude 陶土:线条 / 指针 / 选中高亮(2.6:1,只做辅助强调) */
+  --accent-strong: #B25A3D;  /* 按钮底色,白字约 4.8:1 */
+
+  --ok: #3E7D63; --warn: #A67C1F; --bad: #B5483D;   /* 状态色:低饱和,只做小方块,旁边必有文字 */
+  --chart-grid: #CDD3DA; --series-2: #8A929C;
+}

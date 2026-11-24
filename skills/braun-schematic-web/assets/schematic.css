@@ -1,0 +1,83 @@
+/* schematic.css  讲解层组件:算符级计算图、读数栏、讲义、术语展开。
+   依赖 tokens.css 和 base.css;只用令牌,全部直角,无阴影。配套 schematic.js。 */
+.page.wide { max-width: 1280px; }
+.crumb { font: 500 14px var(--font-sans); color: var(--ink-3); margin-bottom: 10px; }
+.crumb b { color: var(--ink); font-weight: 600; }
+
+/* 页首:2px 墨线 + 标签页 + 主算式 */
+.sg-head { border-top: 2px solid var(--ink); padding-top: 12px; margin-top: 28px; }
+.sg-tabs { display: flex; flex-wrap: wrap; gap: 4px 28px; }
+.sg-tabs button { font: 600 18px var(--font-sans); background: none; border: 0; border-bottom: 2px solid transparent; color: var(--ink-3); padding: 6px 0; cursor: pointer; }
+.sg-tabs button:hover { background: var(--tint); color: var(--ink); }
+.sg-tabs button[aria-selected=true] { color: var(--ink); border-bottom-color: var(--accent); }
+.sg-hero { margin-top: 14px; font-size: clamp(16px, 2.6vw, 22px); }
+.sg-hero .katex-display, .sg-read .katex-display, .lec .katex-display { text-align: left; margin: 0; }
+.sg-hero .katex-display > .katex, .sg-read .katex-display > .katex, .lec .katex-display > .katex { text-align: left; }
+.sg-hero .katex-display { overflow: visible; }
+
+/* 计算图:框放进 阶段(列)× 车道(行)网格,连线按实际位置在 SVG 里布 */
+.sg { position: relative; margin-top: 18px; --gx: 34px; --gy: 26px; }
+.sg-fold { margin-left: auto; align-self: center; }
+.sg-fold[hidden] { display: none; }
+.sg[hidden] { display: none; }
+.sg-grid { display: grid; grid-template-columns: var(--cols); gap: 0 var(--gx); padding-bottom: 8px; }   /* 行高由 schematic.js 设;框自带 margin-top */
+.sg-sh { font: 600 14px var(--font-sans); color: var(--ink-3); }
+.sg-n { position: relative; min-width: 0; text-align: left; padding: 7px 9px 8px; border: 1.5px solid var(--ink); background: var(--bg); color: var(--ink); cursor: pointer; font: inherit; }
+.sg-n.op { background: var(--panel); border-width: 2px; }
+.sg-n.out { border-width: 2px; background: var(--surface); }
+.sg-n.note, .sg-n.par { border: 1.5px dashed var(--line-strong); background: none; color: var(--ink-2); }
+.sg-n.note { cursor: default; }
+.sg-n:not(.note):hover { background: var(--surface); }
+.sg-n.sel { box-shadow: inset 0 -3px 0 var(--accent); }
+.sg-n .tag { display: block; font: 500 14px var(--font-sans); color: var(--ink-3); }
+.sg-n .fx { display: block; margin-top: 2px; font-size: 15px; white-space: nowrap; }
+.sg-n .fx .katex { font-size: 1em; }
+.sg.dim .sg-n:not(.hot) { opacity: .2; }
+.sg-wires { position: absolute; left: 0; top: 0; pointer-events: none; overflow: visible; }
+.sg-wires > path { fill: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-width: 1.5; }
+.sg-wires .w-data { stroke: var(--ink); } .sg-wires .w-param { stroke: var(--line-strong); }
+.sg-wires .hot { stroke: var(--accent); stroke-width: 2.5; }
+.sg-wires .off { opacity: .12; }
+.sg-wires rect { fill: var(--ink); }
+.sg-lab { position: absolute; transform: translate(-50%, -100%); font-size: 14px; line-height: 1; background: var(--bg); padding: 1px 3px; pointer-events: none; white-space: nowrap; }
+.sg-steps { display: none; }
+
+/* 窄屏:不画连线,改成按步骤分组的清单,点击行为不变 */
+@media (max-width: 1000px) {
+  .sg-grid, .sg-wires, .sg-lab, .sg-fold { display: none; }
+  .sg-steps { display: block; }
+  .sg-steps h3 { font: 600 16px var(--font-sans); margin: 18px 0 8px; border-top: 1px solid var(--rule); padding-top: 12px; }
+  .sg-steps .row { display: flex; flex-wrap: wrap; gap: 10px; }
+  .sg-steps .sg-n { flex: 1 1 240px; }
+  .sg-steps .sg-n .fx { white-space: normal; }
+}
+
+/* 读数栏:选中框的名称、算式、说明 */
+.sg-read { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 4fr) minmax(0, 5fr); gap: 0 32px; align-items: start; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 14px 0; margin-top: 18px; }
+.sg-read .k { font: 500 14px var(--font-sans); color: var(--ink-3); }
+.sg-read .t { font: 600 18px var(--font-sans); margin-top: 2px; }
+.sg-read .fm { min-width: 0; font-size: 17px; }
+.sg-read .katex-display { text-align: left; margin: 0; }
+.sg-read p { font-size: 15px; max-width: 62ch; }
+@media (max-width: 900px) { .sg-read { grid-template-columns: minmax(0, 1fr); gap: 8px; } }
+
+/* 讲义:LADR 风格,一条一条,点一条让图只留下它说到的框 */
+.lec { margin-top: 36px; border-top: 2px solid var(--ink); }
+.lec .li { border-bottom: 1px solid var(--rule); padding: 14px 0 12px 14px; margin-left: -14px; cursor: pointer; }
+.lec .li:hover { background: var(--tint); }
+.lec .li.on { box-shadow: inset 3px 0 0 0 var(--accent); background: var(--surface); }
+.lec .lh { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+.lec .no { font: 600 14px var(--font-mono); color: var(--accent-strong); }
+.lec .ty { font: 500 14px var(--font-sans); color: var(--ink-3); }
+.lec .nm { font: 600 16px var(--font-sans); }
+.lec .src { font: 14px var(--font-sans); color: var(--ink-3); margin-left: auto; }
+.lec .fm { margin: 10px 0 6px; max-width: 100%; overflow-x: auto; overflow-y: hidden; scrollbar-width: thin; }
+.lec .fm .katex-display { margin: 0; text-align: left; }
+.lec p { font-size: 15px; max-width: 62ch; }
+.lec p + p { margin-top: 6px; }
+.lec .table-wrap { margin: 10px 0 6px; max-width: 62ch; }
+
+/* 术语:陶土下划线,点一下在原地展开 */
+.term { border-bottom: 1px solid var(--accent); cursor: pointer; }
+.term.open { font-weight: 600; }
+.tdef { display: block; margin: 6px 0; padding-left: 10px; border-left: 3px solid var(--accent); font-size: 15px; font-weight: 400; color: var(--ink-2); }
